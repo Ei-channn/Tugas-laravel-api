@@ -46,7 +46,7 @@ class InvoiceController extends Controller
                 'total_harga' => $itemData->harga * $item['jumlah'],
             ]);
         }
-
+    
         return new InvoiceResource($invoice, true, 'Data Invoice Berhasil Diterima');
     }
 

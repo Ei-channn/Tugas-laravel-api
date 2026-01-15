@@ -37,8 +37,29 @@ class ItemController extends Controller
     }
 
     public function update(Request $request, $id){
+
         $item = Item::findOrFail($id);
-        $item->update($request->all());
+
+        if (is_null($item)) {
+            return response()->json(['message' => 'Data Item Tidak Diterima'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'kode' => 'required|string',
+            'nama_barang' => 'required|string',
+            'harga' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 442);
+        }
+
+        $transactions->update([
+            'kode' => $request->kode ?? $item->kode,    
+            'nama_barang' => $request->nama_barang ?? $item->nama_barang,
+            'harga' => $request->harga ?? $item->harga,
+        ]);
+
         return new ItemResource($item, true, 'Data Item Berhasil Diupdate');
     }
 
