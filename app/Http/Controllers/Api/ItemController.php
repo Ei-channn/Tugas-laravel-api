@@ -54,7 +54,7 @@ class ItemController extends Controller
             return response()->json($validator->errors(), 442);
         }
 
-        $transactions->update([
+        $item->update([
             'kode' => $request->kode ?? $item->kode,    
             'nama_barang' => $request->nama_barang ?? $item->nama_barang,
             'harga' => $request->harga ?? $item->harga,
